@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      canvas {
+        border: 1px solid #d3d3d3;
+        background-color: #f1f1f1;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      var Car1;
+      var Car2;
+      var Car3;
+      var Background;
+
+      var player1;
+      var player2;
+      var player3;
+
+      var p1 = 1;
+      var p2 = 2;
+      var p3 = 3;
+
+      var time;
+
+      function start() {
+        if (time == 1) {
+          return;
+        }
+        startGame();
+      }
+
+      function rand() {
+        SPEED1 = Math.floor(Math.random() * 5) + 1;
+        SPEED2 = Math.floor(Math.random() * 5) + 1;
+        SPEED3 = Math.floor(Math.random() * 5) + 1;
+        if (SPEED1 == SPEED2) {
+          rand();
+        }
+        if (SPEED1 == SPEED3) {
+          rand();
+        }
+        if (SPEED2 == SPEED3) {
+          rand();
+        }
+      }
+
+      function startGame() {
+        Car1 = new component(64, 64, "assets/car1.png", 10, 10, "image");
+        Car2 = new component(64, 64, "assets/car2.png", 10, 120, "image");
+        Car3 = new component(64, 64, "assets/car3.png", 10, 220, "image");
+        Background = new component(550, 300, "assets/Road.png", 0, 0, "image");
+        rand();
+        player1 = document.getElementById("player1").value;
+        player2 = document.getElementById("player2").value;
+        player3 = document.getElementById("player3").value;
+        if (player1 == player2) {
+          return;
+        }
+        if (player1 == player3) {
+          return;
+        }
+        if (player2 == player3) {
+          return;
+        }
+        myGameArea.start();
+      }
+
+      var myGameArea = {
+        canvas: document.createElement("canvas"),
+        start: function() {
+          time = 1;
+          this.canvas.width = 550;
+          this.canvas.height = 300;
+          this.context = this.canvas.getContext("2d");
+          document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+          this.frameNo = 0;
+          this.interval = setInterval(updateGameArea, 20);
+        },
+        clear: function() {
+          this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        },
+        stop: function() {
+          clearInterval(this.interval);
+          clearInterval(A);
+          player1 = 0;
+          player2 = 0;
+          player3 = 0;
+          time = 0;
+          //location.reload();
+        }
+      };
+
+      function component(width, height, color, x, y, type) {
+        this.type = type;
+        if (type == "image") {
+          this.image = new Image();
+          this.image.src = color;
+        }
+        this.width = width;
+        this.height = height;
+        this.speedX = 0;
+        this.speedY = 0;
+        this.x = x;
+        this.y = y;
+        this.update = function() {
+          ctx = myGameArea.context;
+          if (type == "image") {
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+          } else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+          }
+        };
+        this.newPos = function() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+        };
+        this.hitEdge = function(car, player, num) {
+          var edge = myGameArea.canvas.width - this.width;
+          if (this.x > edge) {
+            this.x = edge;
+            console.log(car + player + num);
+            if (num == 1) {
+              if (car == 1 && player == 1) {
+                alert("PLAYER 1");
+              } else if (car == 1 && player == 2) {
+                alert("PLAYER 1");
+              } else if (car == 1 && player == 3) {
+                alert("PLAYER 1");
+              } else if (car == 2 && player == 1) {
+                alert("PLAYER 1");
+              } else if (car == 2 && player == 2) {
+                alert("PLAYER 1");
+              } else if (car == 2 && player == 3) {
+                alert("PLAYER 1");
+              } else if (car == 3 && player == 1) {
+                alert("PLAYER 1");
+              } else if (car == 3 && player == 2) {
+                alert("PLAYER 1");
+              } else if (car == 3 && player == 3) {
+                alert("PLAYER 1");
+              }
+            } else if (num == 2) {
+              if (car == 1 && player == 1) {
+                alert("PLAYER 2");
+              } else if (car == 1 && player == 2) {
+                alert("PLAYER 2");
+              } else if (car == 1 && player == 3) {
+                alert("PLAYER 2");
+              } else if (car == 2 && player == 1) {
+                alert("PLAYER 2");
+              } else if (car == 2 && player == 2) {
+                alert("PLAYER 2");
+              } else if (car == 2 && player == 3) {
+                alert("PLAYER 2");
+              } else if (car == 3 && player == 1) {
+                alert("PLAYER 2");
+              } else if (car == 3 && player == 2) {
+                alert("PLAYER 2");
+              } else if (car == 3 && player == 3) {
+                alert("PLAYER 2");
+              }
+            } else if (num == 3) {
+              if (car == 1 && player == 1) {
+                alert("PLAYER 3");
+              } else if (car == 1 && player == 2) {
+                alert("PLAYER 3");
+              } else if (car == 1 && player == 3) {
+                alert("PLAYER 3");
+              } else if (car == 2 && player == 1) {
+                alert("PLAYER 3");
+              } else if (car == 2 && player == 2) {
+                alert("PLAYER 3");
+              } else if (car == 2 && player == 3) {
+                alert("PLAYER 3");
+              } else if (car == 3 && player == 1) {
+                alert("PLAYER 3");
+              } else if (car == 3 && player == 2) {
+                alert("PLAYER 3");
+              } else if (car == 3 && player == 3) {
+                alert("PLAYER 3");
+              }
+            }
+
+            return myGameArea.stop();
+          }
+        };
+      }
+
+      var A = setInterval(function() {
+        if (time == 1) {
+          move();
+        }
+      }, 1000);
+
+      function updateGameArea() {
+        myGameArea.clear();
+        Background.newPos();
+        Background.update();
+        Car1.newPos();
+        Car1.update();
+        Car2.newPos();
+        Car2.update();
+        Car3.newPos();
+        Car3.update();
+        Car1.hitEdge(1, player1, p1);
+        Car1.hitEdge(1, player2, p2);
+        Car1.hitEdge(1, player3, p3);
+        Car2.hitEdge(2, player1, p1);
+        Car2.hitEdge(2, player2, p2);
+        Car2.hitEdge(2, player3, p3);
+        Car3.hitEdge(3, player1, p1);
+        Car3.hitEdge(3, player2, p2);
+        Car3.hitEdge(3, player3, p3);
+      }
+
+      function move() {
+        Car1.speedX = SPEED1;
+        Car2.speedX = SPEED2;
+        Car3.speedX = SPEED3;
+      }
+    </script>
+    <br />
+    <label for="player1">Player 1:</label>
+    <input id="player1" type="number" min="1" max="3" /> <br />
+    <br />
+    <label for="player2">Player 2:</label>
+    <input id="player2" type="number" min="1" max="3" /> <br />
+    <br />
+    <label for="player3">Player 3:</label>
+    <input id="player3" type="number" min="1" max="3" /> <br />
+    <br />
+    <input type="submit" onclick="start()" value="Submit" />
+  </body>
+</html>
