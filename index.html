@@ -20,23 +20,22 @@
       var player2;
       var player3;
 
-      var p1 = 1;
-      var p2 = 2;
-      var p3 = 3;
-
       var time;
 
       function start() {
         if (time == 1) {
           return;
         }
+        player1 = 0;
+        player2 = 0;
+        player3 = 0;
         startGame();
       }
 
       function rand() {
-        SPEED1 = Math.floor(Math.random() * 7) + 1;
-        SPEED2 = Math.floor(Math.random() * 7) + 1;
-        SPEED3 = Math.floor(Math.random() * 7) + 1;
+        SPEED1 = Math.floor(Math.random() * 10) + 3;
+        SPEED2 = Math.floor(Math.random() * 10) + 3;
+        SPEED3 = Math.floor(Math.random() * 10) + 3;
         if (SPEED1 == SPEED2) {
           rand();
         }
@@ -49,22 +48,34 @@
       }
 
       function startGame() {
-        Car1 = new component(64, 64, "assets/car1.png", 10, 10, "image");
-        Car2 = new component(64, 64, "assets/car2.png", 10, 120, "image");
-        Car3 = new component(64, 64, "assets/car3.png", 10, 220, "image");
-        Background = new component(550, 300, "assets/Road.png", 0, 0, "image");
+        Car1 = new component(64, 64, "assets/car1.png", 10, 10, "image", 1);
+        Car2 = new component(64, 64, "assets/car2.png", 10, 120, "image", 2);
+        Car3 = new component(64, 64, "assets/car3.png", 10, 220, "image", 3);
+        Background = new component(550, 300, "assets/Road.png", 0, 0, "image", 9);
         rand();
         player1 = document.getElementById("player1").value;
         player2 = document.getElementById("player2").value;
         player3 = document.getElementById("player3").value;
-        if (player1 == player2) {
+        parseInt(player1);
+        parseInt(player2);
+        parseInt(player3);
+        if (player1 === player2) {
           return;
         }
-        if (player1 == player3) {
+        else if (player1 === player3) {
           return;
         }
-        if (player2 == player3) {
+        else if (player2 === player3) {
           return;
+        }
+        else if (player1 > 4 || player1 < 1 || player1 == "") {
+            return;
+        }
+        else if (player2 > 4 || player2 < 1 || player2 == "") {
+            return;
+        }
+        else if (player3 > 4 || player3 < 1 || player3 == "") {
+            return;
         }
         myGameArea.start();
       }
@@ -89,11 +100,10 @@
           player1 = 0;
           player2 = 0;
           player3 = 0;
-          time = 0;
         }
       };
 
-      function component(width, height, color, x, y, type) {
+      function component(width, height, color, x, y, type, number) {
         this.type = type;
         if (type == "image") {
           this.image = new Image();
@@ -118,74 +128,47 @@
           this.x += this.speedX;
           this.y += this.speedY;
         };
-        this.hitEdge = function(car, player, num) {
+        this.hitEdge = function() {
           var edge = myGameArea.canvas.width - this.width;
           if (this.x > edge) {
             this.x = edge;
-            console.log(car + player + num);
-            if (num == 1) {
-              if (car == 1 && player == 1) {
+            console.log(number);
+            if (number == 1 && player1 == 1){
+                myGameArea.stop();
                 alert("PLAYER 1");
-              } else if (car == 1 && player == 2) {
-                alert("PLAYER 1");
-              } else if (car == 1 && player == 3) {
-                alert("PLAYER 1");
-              } else if (car == 2 && player == 1) {
-                alert("PLAYER 1");
-              } else if (car == 2 && player == 2) {
-                alert("PLAYER 1");
-              } else if (car == 2 && player == 3) {
-                alert("PLAYER 1");
-              } else if (car == 3 && player == 1) {
-                alert("PLAYER 1");
-              } else if (car == 3 && player == 2) {
-                alert("PLAYER 1");
-              } else if (car == 3 && player == 3) {
-                alert("PLAYER 1");
-              }
-            } else if (num == 2) {
-              if (car == 1 && player == 1) {
-                alert("PLAYER 2");
-              } else if (car == 1 && player == 2) {
-                alert("PLAYER 2");
-              } else if (car == 1 && player == 3) {
-                alert("PLAYER 2");
-              } else if (car == 2 && player == 1) {
-                alert("PLAYER 2");
-              } else if (car == 2 && player == 2) {
-                alert("PLAYER 2");
-              } else if (car == 2 && player == 3) {
-                alert("PLAYER 2");
-              } else if (car == 3 && player == 1) {
-                alert("PLAYER 2");
-              } else if (car == 3 && player == 2) {
-                alert("PLAYER 2");
-              } else if (car == 3 && player == 3) {
-                alert("PLAYER 2");
-              }
-            } else if (num == 3) {
-              if (car == 1 && player == 1) {
-                alert("PLAYER 3");
-              } else if (car == 1 && player == 2) {
-                alert("PLAYER 3");
-              } else if (car == 1 && player == 3) {
-                alert("PLAYER 3");
-              } else if (car == 2 && player == 1) {
-                alert("PLAYER 3");
-              } else if (car == 2 && player == 2) {
-                alert("PLAYER 3");
-              } else if (car == 2 && player == 3) {
-                alert("PLAYER 3");
-              } else if (car == 3 && player == 1) {
-                alert("PLAYER 3");
-              } else if (car == 3 && player == 2) {
-                alert("PLAYER 3");
-              } else if (car == 3 && player == 3) {
-                alert("PLAYER 3");
-              }
             }
-
-            return myGameArea.stop();
+            else if (number == 2 && player1 == 2){
+                myGameArea.stop();
+                alert("PLAYER 1");
+            }
+            else if (number == 3 && player1 == 3){
+                myGameArea.stop();
+                alert("PLAYER 1");
+            }
+            else if (number == 1 && player2 == 1){
+                myGameArea.stop();
+                alert("PLAYER 2");
+            }
+            else if (number == 2 && player2 == 2){
+                myGameArea.stop();
+                alert("PLAYER 2");
+            }
+            else if (number == 3 && player2 == 3){
+                myGameArea.stop();
+                alert("PLAYER 2");
+            }
+            else if (number == 1 && player3 == 1){
+                myGameArea.stop();
+                alert("PLAYER 3");
+            }
+            else if (number == 2 && player3 == 2){
+                myGameArea.stop();
+                alert("PLAYER 3");
+            }
+            else if (number == 3 && player3 == 3){
+                myGameArea.stop();
+                alert("PLAYER 3");
+            }
           }
         };
       }
@@ -206,15 +189,9 @@
         Car2.update();
         Car3.newPos();
         Car3.update();
-        Car1.hitEdge(1, player1, p1);
-        Car1.hitEdge(1, player2, p2);
-        Car1.hitEdge(1, player3, p3);
-        Car2.hitEdge(2, player1, p1);
-        Car2.hitEdge(2, player2, p2);
-        Car2.hitEdge(2, player3, p3);
-        Car3.hitEdge(3, player1, p1);
-        Car3.hitEdge(3, player2, p2);
-        Car3.hitEdge(3, player3, p3);
+        Car1.hitEdge();
+        Car2.hitEdge();
+        Car3.hitEdge();
       }
 
       function move() {
@@ -235,6 +212,7 @@
     <br />
     <input type="submit" onclick="start()" value="Start" /><br><br>
     <input type="submit" onclick="location.reload()" value="Restart" />
-    <p>Help: You will need to input numbers into the boxes for each player. 1 for the 1st Car, 2 for the second and 3 for the third and then click start and an alert will pop up with the person who won. Restart button for reloading the page and having a go again.</p>
+    <p>Help: </p>
+    <p>You will need to input numbers into the boxes for each player.</p> <p>1 for 1st Car, 2 for second and 3 for third and then click start and an alert will pop up with the person who won.</p> <p>Restart button for reloading the page and having a go again.</p>
   </body>
 </html>
