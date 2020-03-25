@@ -23,6 +23,7 @@
       var time;
 
       function start() {
+        // Does not start the game if currently playing
         if (time == 1) {
           return;
         }
@@ -36,6 +37,9 @@
         SPEED1 = Math.floor(Math.random() * 10) + 3;
         SPEED2 = Math.floor(Math.random() * 10) + 3;
         SPEED3 = Math.floor(Math.random() * 10) + 3;
+
+        // Checks to see if the numbers are the same or not and if are then choose the numbers again.
+
         if (SPEED1 == SPEED2) {
           rand();
         }
@@ -48,24 +52,28 @@
       }
 
       function startGame() {
+        // Loads all the assets within the game
         Car1 = new component(64, 64, "assets/car1.png", 10, 10, "image", 1);
         Car2 = new component(64, 64, "assets/car2.png", 10, 120, "image", 2);
         Car3 = new component(64, 64, "assets/car3.png", 10, 220, "image", 3);
         Background = new component(550, 300, "assets/Road.png", 0, 0, "image", 9);
         rand();
+        // Assigns value to each player
         player1 = document.getElementById("player1").value;
         player2 = document.getElementById("player2").value;
         player3 = document.getElementById("player3").value;
+        // makes each numebr a proper integer so a float like 2.2 will turn into 2
         parseInt(player1);
         parseInt(player2);
         parseInt(player3);
-        if (player1 === player2) {
+        // checks to see if the numebrs are the same or if they exceed a certain limit or not
+        if (player1 == player2) {
           return;
         }
-        else if (player1 === player3) {
+        else if (player1 == player3) {
           return;
         }
-        else if (player2 === player3) {
+        else if (player2 == player3) {
           return;
         }
         else if (player1 > 4 || player1 < 1 || player1 == "") {
@@ -129,10 +137,12 @@
           this.y += this.speedY;
         };
         this.hitEdge = function() {
+          // Function checks to see if car has hit the edge of the canvas
           var edge = myGameArea.canvas.width - this.width;
           if (this.x > edge) {
             this.x = edge;
             console.log(number);
+            // checks if number and player match and if yes then show alert
             if (number == 1 && player1 == 1){
                 myGameArea.stop();
                 alert("PLAYER 1");
@@ -174,27 +184,30 @@
       }
 
       var A = setInterval(function() {
+        // Just an interval to run the move function
         if (time == 1) {
           move();
         }
       }, 1000);
 
       function updateGameArea() {
+        // Updates each component within the area of the game
         myGameArea.clear();
         Background.newPos();
         Background.update();
         Car1.newPos();
         Car1.update();
+        Car1.hitEdge();
         Car2.newPos();
         Car2.update();
+        Car2.hitEdge();
         Car3.newPos();
         Car3.update();
-        Car1.hitEdge();
-        Car2.hitEdge();
         Car3.hitEdge();
       }
 
       function move() {
+        // moves the cars x position depending on the random number
         Car1.speedX = SPEED1;
         Car2.speedX = SPEED2;
         Car3.speedX = SPEED3;
